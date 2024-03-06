@@ -5,18 +5,18 @@ import { StyleSheet, Text, SafeAreaView,View, ImageBackground, TextInput ,Keyboa
 import { GeneralButton } from '../components/buttons/GeneralButton';
 import { getUserById } from '../api/users';
 
-const Home: React.FC = () => {
+const Home = () => {
     const [show, setShow] = useState(true);
     const [user, setUser] = useState<any>({});
     const [id, setId] = useState<string>("");
     const [idText, setIdText] = useState<string>("");
-  //
+  
     useEffect(() => {
      const a = async () => {
       const result = await getUserById(id);
       console.log(result);
       if(result.status===200)
-        setUser(result.data);
+      setUser(result.data);
      }
      if(id) a();
      // BatteryModule.getBatteryLevel(callback);
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
   
     return (
    
-    <ImageBackground source={require('../images/background1.jpg')} style={styles.imageBackground}>
+    <ImageBackground  source={require('../images/background1.jpg')} style={styles.imageBackground}>
       <SafeAreaView style={styles.safeAreaView}>
         
           <View style={styles.viewContainer}>
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
             </View>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined}
                     keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}style={styles.container}>
-              <TextInput value={idText} onChangeText={(text)=> setIdText(text)} onEndEditing={()=>{setId(idText)}} style={styles.inputField}/>
+              <TextInput value={idText} onChangeText={(text)=> setIdText(text)} onEndEditing={()=>{setId(idText)}} style={{backgroundColor: "white",height:30,width:200}}/>
               {show && <Text style={{color:"white",fontSize:32}}>{user.name}</Text>}
              </KeyboardAvoidingView>
          </View>
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
         </ImageBackground>
      
     );
-  };
+  }
   export default Home;
 
   const styles = StyleSheet.create({
@@ -82,10 +82,11 @@ const Home: React.FC = () => {
       justifyContent: 'center', // Centers the content vertically
       alignItems: 'center', // Centers the content horizontally
     },
-    inputField: {
-      backgroundColor: "white",
-      height:30,
-      width:200,
-      padding: Platform.OS === 'android' ? 0 : 10,
-    }
+    input: {
+      width: '80%', // 80% of the container's width
+      padding: 10,
+      borderWidth: 1,
+      borderColor: 'gray',
+      marginBottom: 20,
+    },
   });

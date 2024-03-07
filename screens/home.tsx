@@ -19,7 +19,7 @@ const Home = () => {
       setUser(result.data);
      }
      if(id) a();
-     // BatteryModule.getBatteryLevel(callback);
+     
     }, [id]);
   
     return (
@@ -36,7 +36,7 @@ const Home = () => {
             </View>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined}
                     keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}style={styles.container}>
-              <TextInput value={idText} onChangeText={(text)=> setIdText(text)} onEndEditing={()=>{setId(idText)}} style={{backgroundColor: "white",height:30,width:200}}/>
+              <TextInput value={idText} onChangeText={(text)=> setIdText(text)} onEndEditing={()=>{setId(idText)}} style={styles.inputField}/>
               {show && <Text style={{color:"white",fontSize:32}}>{user.name}</Text>}
              </KeyboardAvoidingView>
          </View>
@@ -89,4 +89,13 @@ const Home = () => {
       borderColor: 'gray',
       marginBottom: 20,
     },
+    inputField: {
+      backgroundColor: "white",
+      height:40,
+      width:200,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 15,
+      padding: Platform.OS === 'android' ? 0 : 10,
+    }
   });

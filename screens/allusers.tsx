@@ -1,15 +1,40 @@
-import React from 'react'
-import { View, Text, StyleSheet, ScrollView,ImageBackground, SafeAreaView} from 'react-native';
+
+import React, { useState, useEffect } from 'react';
+import {  StyleSheet, ScrollView,ImageBackground, SafeAreaView} from 'react-native';
+import { getAllUsers } from  '../api/users';
+import { UserCard } from '../components/UserCard';
+
+interface User { 
+  name: string;
+  username: string;
+  email: string;
+  company: {
+    bs: string;
+  };
+}
 
 const Allusers = () => {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const result = await getAllUsers();
+      if (result.status === 200) {
+        setUsers(result.data);
+      } else {
+        console.error('Failed to fetch users', result.status);
+      }
+    };  
+    fetchUsers();
+  }, []); 
+
   return (
     <ImageBackground  source={require('../images/bluegreen.jpg')} style={styles.imageBackground}>
         <SafeAreaView style={styles.safeAreaView}>
             <ScrollView style={styles.scrollView}>
-                <View style={styles.card}>
-                
-                </View>
-
+              {users.map((user) => (
+                <UserCard  user={user} />             
+          ))}
             </ScrollView>
         </SafeAreaView>
     </ImageBackground>
@@ -25,18 +50,16 @@ const styles = StyleSheet.create({
       },
     imageBackground: {
         flex: 1,
-        justifyContent: 'center', // Aligns children vertically
-        alignItems: 'center', // Aligns children horizontally
+        justifyContent: 'center', 
+        alignItems: 'center', 
       },
       scrollView:{
         height:'100%',
       },
       card: {
-        //height:'200%',
         backgroundColor:'rgba(235,255, 255, 1)',
         borderRadius: 20,
         borderWidth:1,
         margin:5
-      }
-      
+      }     
   });

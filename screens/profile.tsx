@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet,ImageBackground,SafeAreaView, TextInput,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet,ImageBackground,SafeAreaView, TextInput,TouchableOpacity, Platform } from 'react-native';
 import { getUserById } from '../api/users';
 import { UserItem } from '../components/UserItem';
 import { useNavigation } from '@react-navigation/native';
@@ -29,7 +29,7 @@ const ProfileScreen = () => {
         <View style={styles.container}>
           <Text style={styles.text}>Set User:</Text>
           <TextInput value={idText} onChangeText={(text)=> setIdText(text)} onEndEditing={()=>{setId(idText)}} style={styles.textInput}/>
-          <TouchableOpacity  style={{borderRadius:15, backgroundColor:'tomato',marginLeft:5,marginRight:3,alignSelf:'center'}} 
+          <TouchableOpacity  style={{borderRadius:15, backgroundColor:'tomato',marginLeft:5,marginRight:3,alignSelf:'center', }} 
                               onPress={() => navigation.navigate('Allusers')}>
             <Text style={styles.buttonAllUsers}>All Users</Text>
           </TouchableOpacity>
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: "white",
     height:30,width:200,
-    borderRadius:10
+    borderRadius:10,
+    padding: Platform.OS === 'android' ? 0 : 10,
   },
     
 });

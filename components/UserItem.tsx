@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginTop: 10,
         backgroundColor: 'gray',
-        borderRadius: 10, // Apply borderRadius here
+        borderRadius: 10, 
       }
 })

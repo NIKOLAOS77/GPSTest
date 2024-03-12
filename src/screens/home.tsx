@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import {GeneralButton} from '../components/buttons/GeneralButton';
 import {getUserById} from '../api/users';
-
-const Home = () => {
+import {StatusBar} from 'react-native';
+const Home: React.FC = () => {
   const [show, setShow] = useState(true);
   const [user, setUser] = useState<any>({});
   const [id, setId] = useState<string>('');
@@ -31,6 +31,7 @@ const Home = () => {
     <ImageBackground
       source={require('../assets/images/background1.jpg')}
       style={styles.imageBackground}>
+      <StatusBar translucent backgroundColor="transparent" />
       <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.viewContainer}>
           <View>
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     width: '100%',
+    marginTop: Platform.OS === 'ios' ? 0 : 50,
   },
   viewContainer: {
     flex: 1,

@@ -1,15 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 
 const SettingsScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
       {/* Add your settings options here */}
-      <Button
-        title="Press me"
-        onPress={() => console.log('Button pressed')}
-      />
+      <Button title="Press me" onPress={() => console.log('Button pressed')} />
     </View>
   );
 };

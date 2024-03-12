@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './screens/home';
@@ -15,10 +15,23 @@ import NotificationsIcon from './assets/svgs/notifications.svg';
 import ProfileIcon from './assets/svgs/person.svg';
 import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
+
 //import SplashScreen from 'react-native-splash-screen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const tabScreens = [
+  {name: 'Home', component: HomeScreen, icon: HomeIcon},
+  {
+    name: 'Notifications',
+    component: NotificationsScreen,
+    icon: NotificationsIcon,
+  },
+  {name: 'Firebase', component: FirebaseScreen, icon: FirebaseIcon},
+  {name: 'Profile', component: ProfileScreen, icon: ProfileIcon},
+  {name: 'Settings', component: SettingsScreen, icon: SettingsIcon},
+];
 
 function MyStack() {
   return (
@@ -32,12 +45,12 @@ function MyStack() {
         name="Allusers"
         component={Allusers}
         options={{
-          headerShown: true, // Show the header, but we'll customize it
-          headerBackTitle: 'Back', // Set the back button text
+          headerShown: true,
+          headerBackTitle: 'Back',
           headerTintColor: 'rgba(0,255, 255, 1)',
           headerTitle: '', // Hide the title
           // Optional: Adjust other header styles as needed
-          headerBackTitleVisible: true, // Ensure back button label is shown (might be unnecessary depending on your React Navigation version)
+          headerBackTitleVisible: true,
         }}
       />
     </Stack.Navigator>
@@ -50,12 +63,6 @@ type TabBarIconProps = {
   size: number;
 };
 
-//const CustomComponent = ({fillColor = 'rgba(235,255, 255, 0.1)'}) => (
-//  <Svg height="200" width="400" viewBox="0 24 295 100">
-//    <Path d="M 34.395833 13.360941 A 26.326698 26.3267 0 0 0 10.194726 29.368749 L 4.2333333 29.368749 L 4.2333333 50.272383 L 10.310998 50.272383 A 26.326698 26.3267 0 0 0 34.395833 66.014057 A 26.326698 26.3267 0 0 0 58.480667 50.272383 L 81.748497 50.272383 A 26.3267 26.3267 0 0 0 105.83333 66.014057 A 26.3267 26.3267 0 0 0 129.91817 50.272383 L 155.83183 50.272383 A 26.3267 26.3267 0 0 0 179.91666 66.014057 A 26.3267 26.3267 0 0 0 204.0015 50.272383 L 227.26933 50.272383 A 26.3267 26.3267 0 0 0 251.35416 66.014057 A 26.3267 26.3267 0 0 0 275.439 50.272383 L 281.7828 50.272383 L 281.7828 29.368749 L 275.57232 29.368749 A 26.3267 26.3267 0 0 0 251.35416 13.360941 A 26.3267 26.3267 0 0 0 227.15306 29.368749 L 204.13482 29.368749 A 26.3267 26.3267 0 0 0 179.91666 13.360941 A 26.3267 26.3267 0 0 0 155.71556 29.368749 L 130.05149 29.368749 A 26.3267 26.3267 0 0 0 105.83333 13.360941 A 26.3267 26.3267 0 0 0 81.632225 29.368749 L 58.613992 29.368749 A 26.326698 26.3267 0 0 0 34.395833 13.360941 z "
-//    fill={fillColor} />
-//  </Svg>
-//);
 const CustomComponent = () => (
   <View
     style={{
@@ -71,117 +78,51 @@ function MyTabs() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           position: 'absolute',
-          borderTopWidth: 0,
-          borderColor: 'transparent',
-          height: 110,
-          backgroundColor: 'transparent',
-          borderEndColor: 'transparent',
-          shadowColor: 'transparent',
+          borderWidth: 0,
+          borderRadius: 30,
+          height: '8%',
+          elevation: 2,
+          backgroundColor: 'lightblue',
+          shadowColor: 'black', // Shadow color
+          shadowOffset: {width: 0, height: 10}, // Shadow direction and distance
+          shadowOpacity: 0.3, // Shadow opacity
+          shadowRadius: 5, // Shadow blur radius
           justifyContent: 'center',
           alignItems: 'center',
-          padding: 15,
+          alignSelf: 'center',
+          bottom: 40,
+          left: 25,
+          right: 25,
+          paddingVertical: Platform.OS === 'ios' ? 30 : 0,
         },
         //tabBarBackground: () => <CustomComponent />,
         tabBarActiveBackgroundColor: 'transparent',
       }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({color, size, focused}: TabBarIconProps) => (
-            <View
-              style={{
-                width: size + 20, // Slightly larger than the icon size for padding
-                height: size + 20, // Same as width to ensure it's square (and thus can be made round)
-                borderRadius: (size + 10) / 2, // Half of width/height to make it round
-                backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)', // Change the background color when focused
-                justifyContent: 'center', // Center the icon horizontally
-                alignItems: 'center', // Center the icon vertically
-              }}>
-              <HomeIcon width={size} height={size} fill={color} />
-            </View>
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Notifications"
-        component={NotificationsScreen}
-        options={{
-          tabBarIcon: ({color, size, focused}: TabBarIconProps) => (
-            <View
-              style={{
-                width: size + 20, // Slightly larger than the icon size for padding
-                height: size + 20, // Same as width to ensure it's square (and thus can be made round)
-                borderRadius: (size + 10) / 2, // Half of width/height to make it round
-                backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)', // Change the background color when focused
-                justifyContent: 'center', // Center the icon horizontally
-                alignItems: 'center', // Center the icon vertically
-              }}>
-              <NotificationsIcon width={size} height={size} fill={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Firebase"
-        component={FirebaseScreen}
-        options={{
-          tabBarIcon: ({color, size, focused}: TabBarIconProps) => (
-            <View
-              style={{
-                width: size + 20, // Slightly larger than the icon size for padding
-                height: size + 20, // Same as width to ensure it's square (and thus can be made round)
-                borderRadius: (size + 10) / 2, // Half of width/height to make it round
-                backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)', // Change the background color when focused
-                justifyContent: 'center', // Center the icon horizontally
-                alignItems: 'center', // Center the icon vertically
-              }}>
-              <FirebaseIcon width={size} height={size} fill={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({color, size, focused}: TabBarIconProps) => (
-            <View
-              style={{
-                width: size + 20, // Slightly larger than the icon size for padding
-                height: size + 20, // Same as width to ensure it's square (and thus can be made round)
-                borderRadius: (size + 10) / 2, // Half of width/height to make it round
-                backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)', // Change the background color when focused
-                justifyContent: 'center', // Center the icon horizontally
-                alignItems: 'center', // Center the icon vertically
-              }}>
-              <ProfileIcon width={size} height={size} fill={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({color, size, focused}: TabBarIconProps) => (
-            <View
-              style={{
-                width: size + 20, // Slightly larger than the icon size for padding
-                height: size + 20, // Same as width to ensure it's square (and thus can be made round)
-                borderRadius: (size + 10) / 2, // Half of width/height to make it round
-                backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)', // Change the background color when focused
-                justifyContent: 'center', // Center the icon horizontally
-                alignItems: 'center', // Center the icon vertically
-              }}>
-              <SettingsIcon width={size} height={size} fill={color} />
-            </View>
-          ),
-        }}
-      />
+      {tabScreens.map(({name, component, icon: Icon}) => (
+        <Tab.Screen
+          key={name}
+          name={name}
+          component={component}
+          options={{
+            tabBarIcon: ({color, size, focused}) => (
+              <View
+                style={{
+                  width: size + 20,
+                  height: size + 20,
+                  borderRadius: (size + 10) / 2,
+                  backgroundColor: focused ? 'tomato' : 'rgba(255,255,255,1)',
+                  justifyContent: 'center', // Center the icon horizontally
+                  alignItems: 'center', // Center the icon vertically
+                }}>
+                <Icon width={size} height={size} fill={color} />
+              </View>
+            ),
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 }

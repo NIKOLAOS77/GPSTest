@@ -18,7 +18,7 @@ import {
   ExtraScreenNavigationProp,
 } from '../api/navigationType';
 
-const ProfileScreen = () => {
+const ProfileScreen: React.FC = () => {
   const navigation = useNavigation<ExtraScreenNavigationProp>();
   const [user, setUser] = useState<any>({});
   const [id, setId] = useState<string>('');
